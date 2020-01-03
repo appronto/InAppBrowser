@@ -1,0 +1,14 @@
+test/javasource/
+test/deployment/
+test/theme/
+test/userlib/
+test/mobile package/
+test/.classpath
+test/.project
+test/.svn
+*.launch
+*.tmp
+*.lock
+*.bak
+.idea/
+*DS_Store*

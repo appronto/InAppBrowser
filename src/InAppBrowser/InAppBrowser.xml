@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="InAppBrowser.widget.InAppBrowser" needsEntityContext="true" offlineCapable="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>InAppBrowser</name>
+    <description>The description of this widget.</description>
+    <icon>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</icon>
+
+    <properties>
+        <property key="urllink" type="attribute" required="true">
+            <caption>URL</caption>
+            <category>Datasource</category>
+            <description>The URL that must be oppened.</description>
+            <attributeTypes>
+                <attributeType name="String" />
+            </attributeTypes>
+        </property>
+
+        <property key="buttonText" type="translatableString" required="true">
+            <caption>Button text</caption>
+            <category>Appearance</category>
+            <description>The text of the link</description>
+            <translations>
+                <translation lang="en_US">Go</translation>
+                <translation lang="nl_NL">Ga</translation>
+            </translations>
+        </property>
+
+        <property key="hideURLBar" type="boolean" defaultValue="true">
+            <caption>Hide URL Bar</caption>
+            <category>In App Browsing</category>
+            <description>Hide the URL bar</description>
+        </property>
+        <property key="hideNavBtn" type="boolean" defaultValue="true">
+            <caption>Hide navigation button</caption>
+            <category>In App Browsing</category>
+            <description>Hide the navigation (back and forward) buttons</description>
+        </property>
+        <property key="disallowScroll" type="boolean" defaultValue="true">
+            <caption>Disallow over scroll</caption>
+            <category>In App Browsing</category>
+            <description>Prevent over scoll kike an extra pull down.</description>
+        </property>
+        <property key="closeText" type="translatableString" required="true">
+            <caption>Close text</caption>
+            <category>In App Browsing</category>
+            <description>The text of the link/button in the In App Browser to close the page.</description>
+            <translations>
+                <translation lang="en_US">Close</translation>
+                <translation lang="nl_NL">Sluiten</translation>
+            </translations>
+        </property>
+
+    </properties>
+</widget>
+
