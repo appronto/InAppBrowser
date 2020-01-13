@@ -15,13 +15,27 @@
         </property>
 
         <property key="buttonText" type="translatableString" required="true">
-            <caption>Button text</caption>
+            <caption>Link text</caption>
             <category>Appearance</category>
             <description>The text of the link</description>
             <translations>
                 <translation lang="en_US">Go</translation>
                 <translation lang="nl_NL">Ga</translation>
             </translations>
+        </property>
+        <property key="buttonIcon" type="string" defaultValue="glyphicon glyphicon-chevron-right">
+            <caption>Link glyphicon</caption>
+            <category>Appearance</category>
+            <description>The complete classes to display the required</description>
+        </property>
+        <property key="buttonRender" type="enumeration" defaultValue="button">
+            <caption>Link render</caption>
+            <category>Appearance</category>
+            <description>Must the link be rendered as button or link</description>
+            <enumerationValues>
+                <enumerationValue key="link">Link</enumerationValue>
+                <enumerationValue key="button">Button</enumerationValue>
+            </enumerationValues>
         </property>
 
         <property key="hideURLBar" type="boolean" defaultValue="true">

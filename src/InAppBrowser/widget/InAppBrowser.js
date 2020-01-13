@@ -60,7 +60,7 @@ define([
 
         // dojo.declare.constructor is called to construct the widget instance. Implement to initialize non-primitive properties.
         constructor: function () {
-            logger.debug(this.id + ".constructor");
+//            logger.debug(this.id + ".constructor");
             this._handles = [];
             
         },
@@ -72,7 +72,9 @@ define([
             if (this.readOnly || this.get("disabled") || this.readonly) {
               this._readOnly = true;
             }
-
+            
+            
+            
             this._updateRendering();
             this._setupEvents();
         },
@@ -88,22 +90,22 @@ define([
 
         // mxui.widget._WidgetBase.enable is called when the widget should enable editing. Implement to enable editing if widget is input widget.
         enable: function () {
-          logger.debug(this.id + ".enable");
+//          logger.debug(this.id + ".enable");
         },
 
         // mxui.widget._WidgetBase.enable is called when the widget should disable editing. Implement to disable editing if widget is input widget.
         disable: function () {
-          logger.debug(this.id + ".disable");
+//          logger.debug(this.id + ".disable");
         },
 
         // mxui.widget._WidgetBase.resize is called when the page's layout is recalculated. Implement to do sizing calculations. Prefer using CSS instead.
         resize: function (box) {
-          logger.debug(this.id + ".resize");
+//          logger.debug(this.id + ".resize");
         },
 
         // mxui.widget._WidgetBase.uninitialize is called when the widget is destroyed. Implement to do special tear-down work.
         uninitialize: function () {
-          logger.debug(this.id + ".uninitialize");
+//          logger.debug(this.id + ".uninitialize");
             // Clean up listeners, helper objects, etc. There is no need to remove listeners added with this.connect / this.subscribe / this.own.
         },
 
@@ -121,26 +123,30 @@ define([
         },
         
         _openBrowser: function () {
-            if(this._contextObj && cordova) {
+            if(this._contextObj) {
                 var link = this._contextObj.get(this.urllink);
                 
-                //,toolbar=no
-                var settings = "";
-                if(this.closeText){
-                    settings = this._append(settings, "closebuttoncaption", this.closeText);
+                if(typeof cordova !== "undefined"){
+                    // Render mobile version
+                    var settings = "";
+                    if(this.closeText){
+                        settings = this._append(settings, "closebuttoncaption", this.closeText);
+                    }
+                    settings = this._append(settings, "location", !this.hideURLBar); //iOS
+                    settings = this._append(settings, "hideurlbar", this.hideURLBar); // Android
+                    settings = this._append(settings, "hidenavigationbuttons", this.hideNavBtn);
+                    settings = this._append(settings, "enableViewportScale", !this.disallowScroll); //iOS
+                    settings = this._append(settings, "disallowoverscroll", this.disallowScroll); // Android
+                    console.log(this.id + "._openBrowser: " + link + " with settings: " + settings);
+
+                    var samlWindow = cordova.InAppBrowser.open(link, "_blank",settings);
+                    samlWindow.addEventListener("loaderror", lang.hitch(this, function (params) {
+                        console.log("Error on loading page: " + JSON.stringify(params));
+                    }));
+                } else {
+                    // Render responsive version
+                    console.log(this.id + "._openBrowser handle responsive");
                 }
-                settings = this._append(settings, "location", !this.hideURLBar); //iOS
-                settings = this._append(settings, "hideurlbar", this.hideURLBar); // Android
-                settings = this._append(settings, "hidenavigationbuttons", this.hideNavBtn);
-                settings = this._append(settings, "enableViewportScale", !this.disallowScroll); //iOS
-                settings = this._append(settings, "disallowoverscroll", this.disallowScroll); // Android
-                console.log(this.id + "._openBrowser: " + link + " with settings: " + settings);
-                
-                var samlWindow = cordova.InAppBrowser.open(link, "_blank",settings);
-                samlWindow.addEventListener("loaderror", lang.hitch(this, function (params) {
-                    console.log("Error on loading page: " + JSON.stringify(params));
-                }));
-                
                 
             } else {
                 console.log(this.id + "._openBrowser context object is missing!");
@@ -165,7 +171,7 @@ define([
         },
 
         _execMf: function (mf, guid, cb) {
-            logger.debug(this.id + "._execMf");
+//            logger.debug(this.id + "._execMf");
             if (mf && guid) {
                 mx.ui.action(mf, {
                     params: {
@@ -187,6 +193,25 @@ define([
         // Rerender the interface.
         _updateRendering: function (callback) {
             logger.debug(this.id + "._updateRendering");
+            
+            
+            if(!this.appButton){
+                // Create button/link
+                
+                if(this.buttonRender == "link"){
+                    // <span role="button" class="mx-link"><span class="glyphicon glyphicon-chevron-right"></span><a>Link</a></span>
+                    this.appButton = $("<span></span>", {"class" : "mx-link", role : "button"});
+                    $(this.appButton).append($("<a></a>", {text: this.buttonText}));
+                } else {
+                    // <button type="button" class="btn mx-button btn-default" data-dojo-attach-point="appButton"><span class="glyphicon glyphicon-chevron-right"></span>Open</button>
+                    this.appButton = $("<button></button>", {"class" : "btn mx-button btn-default", text: this.buttonText});
+                }
+                if(this.buttonIcon){
+                    $(this.appButton).prepend(" ").prepend($("<span></span>",  {"class" : this.buttonIcon}));
+                }
+                $(this.domNode).append(this.appButton);
+                
+            }
 
             // The callback, coming from update, needs to be executed, to let the page know it finished rendering
             this._executeCallback(callback, "_updateRendering");
@@ -194,7 +219,7 @@ define([
 
         // Reset subscriptions.
         _resetSubscriptions: function () {
-            logger.debug(this.id + "._resetSubscriptions");
+//            logger.debug(this.id + "._resetSubscriptions");
             // Release handles on previous object, if any.
             this.unsubscribeAll();
 
