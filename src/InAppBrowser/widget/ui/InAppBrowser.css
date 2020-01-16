@@ -1,17 +1,6 @@
 .inappbrowser {
-    
+    display: inline-block;
 }
-
-.inappbrowser-message {
-
-}
-
-.input-group-addon {
-    clear: both;
-    padding: 2px 6px;
-}
-
-.inappbrowser-infoTextNode {
-    padding: 0.8em 1em;
-    margin-top: 10px;
+.mousehover {
+    cursor: pointer;
 }

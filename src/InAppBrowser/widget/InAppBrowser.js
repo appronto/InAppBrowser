@@ -119,7 +119,17 @@ define([
 
         // Attach events to HTML dom elements
         _setupEvents: function () {
-            $(this.appButton).on('click touch', lang.hitch(this, this._openBrowser));
+            var click = lang.hitch(this, this._openBrowser);
+            $(this.appButton).on('click touch', click);
+            
+            if(this.containerClass){
+                var parent = $(this.domNode).closest("."+this.containerClass);
+                if(parent){
+                    $(parent).on('click touch', click);
+                    $(parent).addClass("mousehover");
+                    logger.debug(this.id + "._setupEvents add clickable container");
+                }
+            }
         },
         
         _openBrowser: function () {
@@ -146,6 +156,7 @@ define([
                 } else {
                     // Render responsive version
                     console.log(this.id + "._openBrowser handle responsive");
+                    window.open(link, this.responsiveHandling);
                 }
                 
             } else {

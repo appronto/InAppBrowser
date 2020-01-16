@@ -14,7 +14,7 @@
             </attributeTypes>
         </property>
 
-        <property key="buttonText" type="translatableString" required="true">
+        <property key="buttonText" type="translatableString" required="false">
             <caption>Link text</caption>
             <category>Appearance</category>
             <description>The text of the link</description>
@@ -26,9 +26,9 @@
         <property key="buttonIcon" type="string" defaultValue="glyphicon glyphicon-chevron-right">
             <caption>Link glyphicon</caption>
             <category>Appearance</category>
-            <description>The complete classes to display the required</description>
+            <description>The complete classes to display a glyphicon as prefix of the text.</description>
         </property>
-        <property key="buttonRender" type="enumeration" defaultValue="button">
+        <property key="buttonRender" type="enumeration" defaultValue="button" required="true">
             <caption>Link render</caption>
             <category>Appearance</category>
             <description>Must the link be rendered as button or link</description>
@@ -36,6 +36,21 @@
                 <enumerationValue key="link">Link</enumerationValue>
                 <enumerationValue key="button">Button</enumerationValue>
             </enumerationValues>
+        </property>
+        
+        <property key="responsiveHandling" type="enumeration" defaultValue="_parent" required="true">
+            <caption>Responsive handling</caption>
+            <category>Behavior</category>
+            <description>How must the link be handled in a responsive browser? Current tab or new tab?</description>
+            <enumerationValues>
+                <enumerationValue key="_parent">Current tab</enumerationValue>
+                <enumerationValue key="_blank">New tab</enumerationValue>
+            </enumerationValues>
+        </property>
+        <property key="containerClass" type="string" required="false">
+            <caption>Clickable container</caption>
+            <category>Behavior</category>
+            <description>Search for an container based on a class in the parentset to set the same click event.</description>
         </property>
 
         <property key="hideURLBar" type="boolean" defaultValue="true">
